@@ -5,6 +5,8 @@ var methodOverride  = require("method-override");
 var pg = require('pg');
 var app = express();
 
+app.set('port', (process.env.PORT || 5000));
+app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(methodOverride());
@@ -29,7 +31,7 @@ api.route('/users')
 app.use('/', api);
 
 // Start server
-app.listen(3000, function() {
-  console.log("Node server running on http://localhost:3000");
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
 });
 
