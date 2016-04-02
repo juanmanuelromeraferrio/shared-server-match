@@ -2,7 +2,6 @@ var express = require("express");
 var path = require("path");
 var bodyParser = require("body-parser");
 var methodOverride  = require("method-override");
-var pg = require('pg');
 var app = express();
 
 app.set('port', (process.env.PORT || 5000));
@@ -13,7 +12,7 @@ app.use(methodOverride());
 
 
 // Import Controllers
-var usersCtrl = require('./controllers/users');
+var usersCtrl = require('./server/controllers/users');
 
 //Example Route
 var router = express.Router();
