@@ -1,0 +1,31 @@
+{
+  "name": "shared-server-match",
+  "version": "0.0.1",
+  "description": "Aplicacion que permite administrar usuarios",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.13.3",
+    "pg": "4.x",
+    "ejs": "2.3.3",
+    "express": "4.13.3",
+    "method-override": "^2.1.2"
+  },
+  "engines": {
+    "node": "0.12.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/juanmanuelromeraferrio/shared-server-match"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ],
+  "author": "Juan Manuel Romera Ferrio",
+  "license": "MIT"
+}

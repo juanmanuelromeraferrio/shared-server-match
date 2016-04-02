@@ -1,0 +1,8 @@
+{
+  "name": "Shared Server Match",
+  "description": "Aplicacion que permite administrar usuarios",
+  "repository": "https://github.com/juanmanuelromeraferrio/shared-server-match",
+  "logo": "http://node-js-sample.herokuapp.com/node.svg",
+  "keywords": ["node", "express", "static","REST", "API"],
+  "image": "heroku/nodejs"
+}
