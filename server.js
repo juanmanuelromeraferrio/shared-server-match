@@ -12,6 +12,7 @@ app.use(methodOverride());
 
 // Import Controllers
 var usersCtrl = require('./server/controllers/users');
+var interestCtrl = require('./server/controllers/interest');
 
 //Example Route
 var router = express.Router();
@@ -31,6 +32,10 @@ api.route('/users/:id')
   .get(usersCtrl.getUser)
   .put(usersCtrl.updateUser)
   .delete(usersCtrl.deleteUser);
+
+
+api.route('/interest')
+  .post(interestCtrl.saveInterest);
 
 app.use('/', api);
 
