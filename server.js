@@ -6,7 +6,6 @@ var app = express();
 
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(methodOverride());
 
@@ -17,7 +16,7 @@ var usersCtrl = require('./server/controllers/users');
 //Example Route
 var router = express.Router();
 router.get('/', function(req, res) {
-  res.send("Hello world!");
+  res.send("Shared Server Match Api Restful");
 });
 app.use(router);
 
@@ -25,7 +24,8 @@ app.use(router);
 var api = express.Router();
 
 api.route('/users')
-  .get(usersCtrl.getAllUsers);
+  .get(usersCtrl.getAllUsers)
+  .post(usersCtrl.saveUser);
 
 app.use('/', api);
 

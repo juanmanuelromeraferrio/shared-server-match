@@ -13,6 +13,21 @@ $ npm start
 
 Your app should now be running on [localhost:5000](http://localhost:5000/).
 
+
+## Provision Postgres Database
+
+ Create local database
+
+- Install [Postgres](https://devcenter.heroku.com/articles/heroku-postgresql#local-setup) 
+- Configure the config.js 
+    - postgres://<username>:<password>@localhost:5432/postgres
+	
+Create database in Heroku
+
+```sh
+$ heroku addons:create heroku-postgresql:hobby-dev
+```
+
 ## Deploying to Heroku
 
 ```

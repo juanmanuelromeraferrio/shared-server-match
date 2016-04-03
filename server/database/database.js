@@ -6,5 +6,6 @@ console.log(dbConnection);
 
 var client = new pg.Client(dbConnection);
 client.connect();
-var query = client.query('CREATE TABLE users(id SERIAL PRIMARY KEY, text VARCHAR(1000) not null, isDelete BOOLEAN)');
+
+var query = client.query('CREATE TABLE users(id SERIAL PRIMARY KEY, data JSONB, insert_time timestamp, update_time timestamp)');
 query.on('end', function() { client.end(); });
