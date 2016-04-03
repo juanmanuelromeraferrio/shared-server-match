@@ -34,7 +34,8 @@ api.route('/users/:id')
   .delete(usersCtrl.deleteUser);
 
 
-api.route('/interest')
+api.route('/interests')
+  .get(interestCtrl.getAllInterests)
   .post(interestCtrl.saveInterest);
 
 app.use('/', api);
