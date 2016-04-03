@@ -27,6 +27,9 @@ api.route('/users')
   .get(usersCtrl.getAllUsers)
   .post(usersCtrl.saveUser);
 
+api.route('/users/:id')
+  .get(usersCtrl.getUser);
+
 app.use('/', api);
 
 // Start server

@@ -25,15 +25,32 @@ exports.getAllUsers = function(req, res) {
 
         // Stream results back one row at a time
         query.on('row', function(row) {
+
+          var user = {
+            'user': "" 
+          }
+
           var response = row.data;
           response.id = row.id;
-          results.push(response);
+
+          user.user = response;
+
+          results.push(user);
         });
 
         // After all data is returned, close connection and return results
         query.on('end', function() {
           done();
-          return res.json(results);
+
+          var response = {
+            'users': "" ,
+            "metadata": {
+              "version": "0.1"
+            }
+          }
+
+          response.users = results;
+          return res.json(response);
         });
 
 
@@ -44,12 +61,14 @@ exports.getAllUsers = function(req, res) {
 exports.saveUser = function(req, res) {
   console.log('POST /users');
 
+    var user = req.body.user;
+    if (typeof user == 'undefined')
+    {
+        return res.sendStatus(400);
+    }
 
     // Grab data from http request
-    var data = {data: req.body, insert_time: new Date().toISOString()};
-
-    console.log(data);
-
+    var data = {data: user, insert_time: new Date().toISOString()};
     // Get a Postgres client from the connection pool
     pg.connect(dbConnection, function(err, client, done) {
         // Handle connection errors
@@ -69,5 +88,57 @@ exports.saveUser = function(req, res) {
           return res.sendStatus(200);
         }
       });
+      });
+  };
+
+//GET User by ID
+exports.getUser = function(req, res) {
+
+  console.log('GET /users/' + req.params.id);
+  
+  var data = {id: req.params.id}
+  var results = [];
+
+    // Get a Postgres client from the connection pool
+    pg.connect(dbConnection, function(err, client, done) {
+        // Handle connection errors
+        if(err) {
+          done();
+          console.log(err);
+          return res.status(500).json({ success: false, data: err});
+        }
+
+        // SQL Query > Select Data
+        var query = client.query("select id, data FROM users WHERE ID = $1 " , [data.id]);
+
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+          var response = row.data;
+          response.id = row.id;
+          results.push(response);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+          done();
+
+          if(results.length == 0){
+             return res.json(null);
+          } else {
+              var response = {
+              'user': "",
+              "metadata": {
+                "version": "0.1"
+              }
+            }
+
+            response.user = results[0];
+            return res.json(response);
+          }
+
+
+        });
+
+
       });
   };
