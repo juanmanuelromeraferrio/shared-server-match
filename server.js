@@ -28,7 +28,8 @@ api.route('/users')
   .post(usersCtrl.saveUser);
 
 api.route('/users/:id')
-  .get(usersCtrl.getUser);
+  .get(usersCtrl.getUser)
+  .put(usersCtrl.updateUser);
 
 app.use('/', api);
 

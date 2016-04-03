@@ -57,39 +57,6 @@ exports.getAllUsers = function(req, res) {
       });
   };
 
-//POST - Insert a new User in db
-exports.saveUser = function(req, res) {
-  console.log('POST /users');
-
-    var user = req.body.user;
-    if (typeof user == 'undefined')
-    {
-        return res.sendStatus(400);
-    }
-
-    // Grab data from http request
-    var data = {data: user, insert_time: new Date().toISOString()};
-    // Get a Postgres client from the connection pool
-    pg.connect(dbConnection, function(err, client, done) {
-        // Handle connection errors
-        if(err) {
-          done();
-          console.log(err);
-          return res.status(500).json({ success: false, data: err});
-        }
-
-      client.query("INSERT INTO users(data, insert_time) values($1, $2) RETURNING id", [data.data, data.insert_time], function(err, result) {
-          done();
-          if (err) {
-           console.log(err);
-           return res.status(500).json({ success: false, data: err});
-         } else {
-          console.log('User inserted with id: ' + result.rows[0].id);
-          return res.sendStatus(200);
-        }
-      });
-      });
-  };
 
 //GET User by ID
 exports.getUser = function(req, res) {
@@ -140,5 +107,78 @@ exports.getUser = function(req, res) {
         });
 
 
+      });
+  };
+
+  //POST - Insert a new User in db
+exports.saveUser = function(req, res) {
+  console.log('POST /users');
+
+    var user = req.body.user;
+    if (typeof user == 'undefined')
+    {
+        return res.sendStatus(400);
+    }
+
+    // Grab data from http request
+    var data = {data: user, insert_time: new Date().toISOString()};
+    // Get a Postgres client from the connection pool
+    pg.connect(dbConnection, function(err, client, done) {
+        // Handle connection errors
+        if(err) {
+          done();
+          console.log(err);
+          return res.status(500).json({ success: false, data: err});
+        }
+
+      client.query("INSERT INTO users(data, insert_time) values($1, $2) RETURNING id", [data.data, data.insert_time], function(err, result) {
+          done();
+          if (err) {
+           console.log(err);
+           return res.status(500).json({ success: false, data: err});
+         } else {
+          console.log('User inserted with id: ' + result.rows[0].id);
+          return res.sendStatus(200);
+        }
+      });
+      });
+  };
+
+//PUT - Update an user in db
+exports.updateUser = function(req, res) {
+    console.log('PUT /users/' + req.params.id);
+
+    var user = req.body.user;
+    if (typeof user == 'undefined')
+    {
+        return res.sendStatus(400);
+    }
+
+    // Grab data from http request
+    var data = {data: user, update_time: new Date().toISOString(), id: req.params.id};
+    // Get a Postgres client from the connection pool
+    pg.connect(dbConnection, function(err, client, done) {
+        // Handle connection errors
+        if(err) {
+          done();
+          console.log(err);
+          return res.status(500).json({ success: false, data: err});
+        }
+
+        client.query("UPDATE users SET data = $1, update_time = $2 WHERE id = $3 RETURNING id", [data.data, data.update_time, data.id], function(err, result) {
+            done();
+            if (err) {
+             console.log(err);
+             return res.status(500).json({ success: false, data: err});
+           } else {
+            
+            if(result.rows.length == 0){
+               return res.status(500).json({ success: false, data: 'Usuario inexistente'});
+            } else {
+               console.log('User update with id: ' + result.rows[0].id);
+               return res.sendStatus(200);
+            }
+          }
+        });
       });
   };
