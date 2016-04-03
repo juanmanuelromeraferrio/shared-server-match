@@ -29,7 +29,8 @@ api.route('/users')
 
 api.route('/users/:id')
   .get(usersCtrl.getUser)
-  .put(usersCtrl.updateUser);
+  .put(usersCtrl.updateUser)
+  .delete(usersCtrl.deleteUser);
 
 app.use('/', api);
 

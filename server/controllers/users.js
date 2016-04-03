@@ -90,7 +90,7 @@ exports.getUser = function(req, res) {
           done();
 
           if(results.length == 0){
-             return res.json(null);
+              return res.status(500).json({ success: false, data: 'Usuario inexistente'});
           } else {
               var response = {
               'user': "",
@@ -171,11 +171,44 @@ exports.updateUser = function(req, res) {
              console.log(err);
              return res.status(500).json({ success: false, data: err});
            } else {
-            
+
             if(result.rows.length == 0){
                return res.status(500).json({ success: false, data: 'Usuario inexistente'});
             } else {
                console.log('User update with id: ' + result.rows[0].id);
+               return res.sendStatus(200);
+            }
+          }
+        });
+      });
+  };
+
+  //PUT - Update an user in db
+exports.deleteUser = function(req, res) {
+    console.log('DELETE /users/' + req.params.id);
+
+    // Grab data from http request
+    var data = {id: req.params.id};
+    // Get a Postgres client from the connection pool
+    pg.connect(dbConnection, function(err, client, done) {
+        // Handle connection errors
+        if(err) {
+          done();
+          console.log(err);
+          return res.status(500).json({ success: false, data: err});
+        }
+
+        client.query("DELETE FROM users WHERE id = $1 RETURNING id", [data.id], function(err, result) {
+            done();
+            if (err) {
+             console.log(err);
+             return res.status(500).json({ success: false, data: err});
+           } else {
+            
+            if(result.rows.length == 0){
+               return res.status(500).json({ success: false, data: 'Usuario inexistente'});
+            } else {
+               console.log('User delete with id: ' + result.rows[0].id);
                return res.sendStatus(200);
             }
           }
