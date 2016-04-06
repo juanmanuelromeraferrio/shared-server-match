@@ -138,7 +138,20 @@ exports.saveUser = function(req, res) {
            return res.status(500).json({ success: false, data: err});
          } else {
           console.log('User inserted with id: ' + result.rows[0].id);
-          return res.sendStatus(200);
+
+          var user = data.data;
+          user.id = result.rows[0].id;
+
+          var response = {
+              'user': "",
+              "metadata": {
+                "version": "0.1"
+          }
+        }
+
+          response.user = user;
+
+          return res.json(response);
         }
       });
       });
