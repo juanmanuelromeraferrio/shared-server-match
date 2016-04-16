@@ -1,23 +1,21 @@
-var express = require('express');
 var path = require('path');
 var pg = require('pg');
 var dbConnection = require(path.join(__dirname, '../', '../', 'config'));
 
-
-//GET - Return all interest in DB
-exports.getAllInterests = function(req, res) {
-
-  console.log('GET /interests');
-  
+/**
+ * Retrieves an List of Interest
+ * @param {Function} callback  The function to call when retrieval is complete.
+ */
+ exports.getInterest = function(callback) {
   var results = [];
-
     // Get a Postgres client from the connection pool
     pg.connect(dbConnection, function(err, client, done) {
         // Handle connection errors
         if(err) {
           done();
           console.log(err);
-          return res.status(500).json({ success: false, data: err});
+          callback(err);
+          return;
         }
 
         // SQL Query > Select Data
@@ -34,51 +32,40 @@ exports.getAllInterests = function(req, res) {
 
           var response = {
             "interests": "" ,
-            "metadata": {
-              "version": "0.1",
-              "count": 3
-            }
           }
 
           response.interests = results;
-          return res.json(response);
+          callback(null, response);
         });
-
-
       });
   };
 
 
-  //POST - Insert a new Interest in db
-exports.saveInterest = function(req, res) {
-  console.log('POST /users');
-
-    var interest = req.body.interest;
-    if (typeof interest == 'undefined')
-    {
-        return res.sendStatus(400);
-    }
-
-    // Grab data from http request
-    var data = {category: interest.category , value: interest.value}
-    // Get a Postgres client from the connection pool
-    pg.connect(dbConnection, function(err, client, done) {
+/**
+ * Save Interest 
+ * @param {Interest} Interest to Persist
+ * @param {Function} callback  The function to call when retrieval is complete.
+ */
+ exports.saveInterest = function(interest,callback) {
+  pg.connect(dbConnection, function(err, client, done) {
         // Handle connection errors
         if(err) {
           done();
           console.log(err);
-          return res.status(500).json({ success: false, data: err});
+          callback(err);
+          return;
         }
 
-      client.query("INSERT INTO interest(category, value) values($1, $2) RETURNING id", [data.category, data.value], function(err, result) {
+        client.query("INSERT INTO interest(category, value) values($1, $2) RETURNING id", [interest.category, interest.value], function(err, result) {
           done();
           if (err) {
            console.log(err);
-           return res.status(500).json({ success: false, data: err});
+           callback(err);
          } else {
           console.log('Interest inserted with id: ' + result.rows[0].id);
-          return res.sendStatus(200);
+          callback(null);
         }
       });
       });
-  };
+
+};

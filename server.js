@@ -12,7 +12,7 @@ app.use(methodOverride());
 
 // Import Controllers
 var usersCtrl = require('./server/controllers/users');
-var interestCtrl = require('./server/controllers/interest');
+var interestCtrl = require('./server/controllers/InterestController');
 var photoCtrl = require('./server/controllers/photo');
 
 //Example Route
