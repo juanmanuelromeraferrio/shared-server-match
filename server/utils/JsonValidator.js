@@ -9,11 +9,13 @@ var v = new Validator();
  		"interest": {
  			"category": {"type": "string"},
  			"value": {"type": "string"},
- 			"required": ["category", "value"]
- 		}
- 	},
- 	"required": ["interest"]
- };
+      "maxProperties": 2,
+      "required": ["category", "value"]
+    }
+  },
+  "maxProperties": 1,
+  "required": ["interest"]
+};
 
  // Photo
  var photoSchema = {
@@ -22,6 +24,7 @@ var v = new Validator();
  	"properties": {
  		"photo": {"type": "string"}
  	},
+  "maxProperties": 1,
  	"required": ["photo"]
  };
 
@@ -33,6 +36,7 @@ var v = new Validator();
   		"latitude": {"type": "string"},
   		"longitude": {"type": "string"}
   	},
+    "maxProperties": 2,
   	"required": ["latitude","longitude"]
   };
 
@@ -47,9 +51,11 @@ var v = new Validator();
   			"photo": {"type": "string"},
   			"interests": {"type": "array", "items": { "type": "object", "properties": { "category": {"type": "string"}, "value": {"type": "string"}},"required": ["category", "value"]}},
   			"location": {"$ref": "/SimpleLocation"},
+        "maxProperties": 6,
   			"required": ["name", "alias", "email", "interests", "location"]
   		}
   	},
+    "maxProperties": 1,
   	"required": ["user"]
   };
 

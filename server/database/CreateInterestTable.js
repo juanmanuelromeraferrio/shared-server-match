@@ -7,8 +7,5 @@ console.log(dbConnection);
 var client = new pg.Client(dbConnection);
 client.connect();
 
-var query = client.query('DROP TABLE IF EXISTS users;');
-query.on('end', function() { client.end(); });
-
-var query = client.query('CREATE TABLE users(id SERIAL PRIMARY KEY, data JSONB, insert_time timestamp, update_time timestamp)');
+var query = client.query('CREATE TABLE interest(id SERIAL PRIMARY KEY, category text, value text)');
 query.on('end', function() { client.end(); });
