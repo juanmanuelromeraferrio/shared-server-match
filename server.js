@@ -11,9 +11,8 @@ app.use(methodOverride());
 
 
 // Import Controllers
-var usersCtrl = require('./server/controllers/users');
+var usersCtrl = require('./server/controllers/UserController');
 var interestCtrl = require('./server/controllers/InterestController');
-var photoCtrl = require('./server/controllers/photo');
 
 //Example Route
 var router = express.Router();
@@ -39,7 +38,7 @@ api.route('/interests')
   .post(interestCtrl.saveInterest);
 
  api.route('/users/:id/photo')
-  .put(photoCtrl.updatePhoto);
+  .put(usersCtrl.updatePhoto);
 
 app.use('/', api);
 

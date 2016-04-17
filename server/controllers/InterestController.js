@@ -1,8 +1,3 @@
-var express = require('express');
-var path = require('path');
-var pg = require('pg');
-var dbConnection = require(path.join(__dirname, '../', '../', 'config'));
-
 var service = require('../service/InterestService');
 
 

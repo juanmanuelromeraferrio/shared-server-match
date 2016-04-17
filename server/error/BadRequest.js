@@ -1,4 +1,4 @@
-var sys = require('sys'),
+var sys = require('util'),
 
 BadRequest = function(message) {
     this.status = 400;
