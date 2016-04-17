@@ -2,6 +2,7 @@ var dao = require('../dao/UserDao');
 var utils = require('../utils/Utils');
 var BadRequest = require("../error/BadRequest");
 var NotFound = require("../error/NotFound");
+var jsonValidator = require('../utils/JsonValidator');
 
 exports.getUsers = function(callback) {
 
@@ -32,45 +33,46 @@ exports.getUser = function(userID,callback) {
 
 exports.saveUser = function(req,callback) {
 
-    //Valido Request
-    var user = req.body.user;
-    if (typeof user == 'undefined')
-    {
-      callback(new BadRequest("Invalid User"));
-      return;
+  var isValid = jsonValidator.isUserValid(req.body);
+
+  if(!isValid)
+  {
+    callback(new BadRequest("Invalid User"));
+    return;
+  }
+
+  var user = req.body.user;
+  dao.saveUser(user, function(err,response) {
+    if(err) {
+      callback(err);
+    } else {
+      callback(null,response);
     }
+  });
+};
 
-    dao.saveUser(user, function(err,response) {
-      if(err) {
-        callback(err);
-      } else {
-        callback(response);
-      }
-    });
-  };
+exports.updateUser = function(req,callback) {
 
-  exports.updateUser = function(req,callback) {
+  var id = req.params.id;
+  var isValid = jsonValidator.isUserValid(req.body);
 
-    var id = req.params.id;
+  if(!isValid)
+  {
+    callback(new BadRequest("Invalid User"));
+    return;
+  }
 
-    //Valido Request
-    var user = req.body.user;
-    if (typeof user == 'undefined')
-    {
-      callback(new BadRequest("Invalid User"));
-      return;
+  var user = req.body.user;
+  dao.updateUser(id, user, function(err,response) {
+    if(err) {
+      callback(err);
+    } else if (response) {
+      callback(null,null);
+    } else {
+      callback(new NotFound("Usuario Inexistente"));
     }
-
-    dao.updateUser(id, user, function(err,response) {
-      if(err) {
-        callback(err);
-      } else if (response) {
-        callback(null,null);
-      } else {
-        callback(new NotFound("Usuario Inexistente"));
-      }
-    });
-  };
+  });
+};
 
 exports.deleteUser = function(userID,callback) {
   dao.deleteUser(userID,function(err,response) {
@@ -86,13 +88,17 @@ exports.deleteUser = function(userID,callback) {
 
 exports.updatePhoto = function(req,callback) {
 
-  var userID = req.params.id;
-  var photo = req.body.photo;
+  var isValid = jsonValidator.isPhotoValid(req.body);
+  console.log("udpdatePhotoValid " + isValid);
 
-  if (typeof photo == 'undefined')
+  if(!isValid)
   {
     callback(new BadRequest("Invalid Photo"));
+    return;
   }
+
+  var userID = req.params.id;
+  var photo = req.body.photo;
 
   dao.getUser(userID,true,function(err,response) {
    if(err) {

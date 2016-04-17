@@ -1,5 +1,6 @@
 var dao = require('../dao/InterestDao');
 var utils = require('../utils/Utils');
+var jsonValidator = require('../utils/JsonValidator');
 var BadRequest = require("../error/BadRequest");
 
 /*
@@ -26,23 +27,23 @@ var BadRequest = require("../error/BadRequest");
  */
  exports.saveInterest = function(req,callback) {
 
-  	//Valido Request
-  	var interest = req.body.interest;
-  	if (typeof interest == 'undefined')
-  	{
-  		callback(new BadRequest("Invalid Interest"));
-  		return;
-  	}
+  var isValid = jsonValidator.isInterestValid(req.body);
+  
+  if(!isValid)
+  {
+    callback(new BadRequest("Invalid Interest"));
+    return;
+  }
 
-  	var interest = {category: interest.category , value: interest.value}
+  var interest = {category: req.body.interest.category , value: req.body.interest.value}
 
-  	dao.saveInterest(interest, function(err,response) {
-  		if(err) {
-  			callback(err);
-  		} else {
-  			callback(null);
-  		}
+  dao.saveInterest(interest, function(err,response) {
+    if(err) {
+     callback(err);
+   } else {
+     callback(null);
+   }
 
 
-  	});
-  };
+ });
+};

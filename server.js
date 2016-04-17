@@ -25,20 +25,20 @@ app.use(router);
 var api = express.Router();
 
 api.route('/users')
-  .get(usersCtrl.getAllUsers)
-  .post(usersCtrl.saveUser);
+.get(usersCtrl.getAllUsers)
+.post(usersCtrl.saveUser);
 
 api.route('/users/:id')
-  .get(usersCtrl.getUser)
-  .put(usersCtrl.updateUser)
-  .delete(usersCtrl.deleteUser);
+.get(usersCtrl.getUser)
+.put(usersCtrl.updateUser)
+.delete(usersCtrl.deleteUser);
 
 api.route('/interests')
-  .get(interestCtrl.getAllInterests)
-  .post(interestCtrl.saveInterest);
+.get(interestCtrl.getAllInterests)
+.post(interestCtrl.saveInterest);
 
- api.route('/users/:id/photo')
-  .put(usersCtrl.updatePhoto);
+api.route('/users/:id/photo')
+.put(usersCtrl.updatePhoto);
 
 app.use('/', api);
 

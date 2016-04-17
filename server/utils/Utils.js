@@ -2,10 +2,10 @@
  * Retrieves Metadata
  */
  exports.getMetadata = function() {
-  var data = {
-    version: "0.1",
-    count: 0
-  };
+ 	var data = {
+ 		version: "0.1",
+ 		count: 0
+ 	};
 
-  return data;
-};
+ 	return data;
+ };
