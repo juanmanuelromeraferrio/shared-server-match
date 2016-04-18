@@ -4,7 +4,7 @@
   "description": "Aplicacion que permite administrar usuarios",
   "main": "server.js",
   "scripts": {
-    "test": "mocha tests --recursive --watch",
+    "test": "mocha tests --recursive",
     "start": "node server.js"
   },
   "dependencies": {
