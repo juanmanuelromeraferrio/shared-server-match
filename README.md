@@ -22,10 +22,25 @@ Your app should now be running on [localhost:5000](http://localhost:5000/).
 - Configure the config.js 
     - postgres://<username>:<password>@localhost:5432/postgres
 	
+  Create tables in database
+
+```sh
+$ cd server/database
+$ node CreateUserTable.js
+$ node CreateInterestTable.js
+```
+
 Create database in Heroku
 
 ```sh
 $ heroku addons:create heroku-postgresql:hobby-dev
+```
+Create tables in heroku database
+
+```sh
+$ heroku pg:psql
+$ create table interest(id serial primary key, category text, value text);
+$ create table user(id serial primary key, data jsonb, insert_time timestamp, update_time timestamp);
 ```
 
 ## Deploying to Heroku
@@ -38,3 +53,10 @@ $ heroku open
 or
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
+
+## Running Tests
+
+```
+$ npm test
+```
