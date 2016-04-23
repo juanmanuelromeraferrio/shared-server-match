@@ -10,7 +10,7 @@ var interestSchema = {
       "$ref": "/SimpleInterest"
     }
   },
-  "maxProperties": 1,
+  "additionalProperties": false,
   "required": ["interest"]
 };
 
@@ -25,7 +25,7 @@ var interestSimpleSchema = {
       "type": "string"
     }
   },
-  "maxProperties": 2,
+  "additionalProperties": false,
   "required": ["category", "value"]
 };
 
@@ -38,7 +38,7 @@ var photoSchema = {
       "type": "string"
     }
   },
-  "maxProperties": 1,
+  "additionalProperties": false,
   "required": ["photo"]
 };
 
@@ -54,7 +54,7 @@ var locationSchema = {
       "type": "string"
     }
   },
-  "maxProperties": 2,
+  "additionalProperties": false,
   "required": ["latitude", "longitude"]
 };
 
@@ -91,7 +91,7 @@ var userSchema = {
       "required": ["name", "alias", "email", "interests", "location"]
     }
   },
-  "maxProperties": 1,
+  "additionalProperties": false,
   "required": ["user"]
 };
 
