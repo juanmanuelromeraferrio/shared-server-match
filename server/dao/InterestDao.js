@@ -69,3 +69,37 @@ var dbConnection = require(path.join(__dirname, '../', '../', 'config'));
       });
 
 };
+
+
+/**
+ * Exists Interest
+ * @param {Interest} interest  The interest to see if exists.
+ * @param {Function} callback  The function to call when retrieval is complete.
+ */
+ exports.existsInterest = function(interest,callback) {
+  pg.connect(dbConnection, function(err, client, done) {
+        // Handle connection errors
+        if(err) {
+          done();
+          console.log(err);
+          callback(err);
+          return;
+        }
+
+        client.query("SELECT COUNT(*) FROM interest WHERE category = $1 AND value = $2", [interest.category, interest.value], function(err, result) {
+          done();
+          if (err) {
+           console.log(err);
+           callback(err);
+         } else {
+          var count = result.rows[0].count;
+          if(count > 0)
+          {
+           callback(null,true);
+         } else {
+           callback(null,false);
+         }
+       }
+     });
+      });
+};

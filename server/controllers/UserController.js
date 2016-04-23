@@ -1,13 +1,14 @@
-var service = require('../service/UserService');
+var userService = require('../service/UserService');
+var errorHandler = require('../utils/ErrorHandler');
 
 //GET - Return all users in DB
 exports.getAllUsers = function(req, res) {
 
 	console.log('GET /users');
 
-  service.getUsers(function(err,response) {
+  userService.getUsers(function(err,response) {
     if(err) {
-      return res.status(500).json({ success: false, data: err});
+      return errorHandler.throwError(res,err);
     }
     return res.json(response);
   });
@@ -19,9 +20,9 @@ exports.getUser = function(req, res) {
 
   console.log('GET /users/' + req.params.id);
 
-  service.getUser(req.params.id, function(err,response) {
+  userService.getUser(req.params.id, function(err,response) {
     if(err) {
-      return res.status(500).json({ success: false, data: err});
+      return errorHandler.throwError(res,err);
     }
     return res.json(response);
   });
@@ -30,10 +31,9 @@ exports.getUser = function(req, res) {
 //POST - Insert a new User in db
 exports.saveUser = function(req, res) {
   console.log('POST /users');
-
-  service.saveUser(req, function(err,response) {
+  userService.saveUser(req, function(err,response) {
     if(err) {
-      return res.status(500).json({ success: false, data: err});
+      return errorHandler.throwError(res,err);
     }
     return res.json(response);
   });
@@ -43,9 +43,9 @@ exports.saveUser = function(req, res) {
 exports.updateUser = function(req, res) {
   console.log('PUT /users/' + req.params.id);
 
-  service.updateUser(req, function(err,response) {
+  userService.updateUser(req, function(err,response) {
     if(err) {
-      return res.status(500).json({ success: false, data: err});
+      return errorHandler.throwError(res,err);
     }
     return res.sendStatus(200);
   });
@@ -54,9 +54,9 @@ exports.updateUser = function(req, res) {
 //DELETE - DELETE an user in db
 exports.deleteUser = function(req, res) {
   console.log('DELETE /users/' + req.params.id);
-  service.deleteUser(req.params.id, function(err,response) {
+  userService.deleteUser(req.params.id, function(err,response) {
     if(err) {
-      return res.status(500).json({ success: false, data: err});
+      return errorHandler.throwError(res,err);
     }
     return res.sendStatus(200);
   });
@@ -65,9 +65,9 @@ exports.deleteUser = function(req, res) {
 //PUT - Update Photo
 exports.updatePhoto = function(req, res) {
   console.log('PUT /users/'+ req.params.id + '/photo');
-  service.updatePhoto(req, function(err,response) {
+  userService.updatePhoto(req, function(err,response) {
     if(err) {
-      return res.status(500).json({ success: false, data: err});
+      return errorHandler.throwError(res,err);
     }
     return res.sendStatus(200);
   });

@@ -1,10 +1,11 @@
 /**
  * Retrieves Metadata
  */
- exports.getMetadata = function() {
+ exports.getMetadata = function(size) {
+ 	console.log("size " + size);
  	var data = {
  		version: "0.1",
- 		count: 0
+ 		count: size
  	};
 
  	return data;

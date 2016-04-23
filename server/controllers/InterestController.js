@@ -1,14 +1,15 @@
 var service = require('../service/InterestService');
+var errorHandler = require('../utils/ErrorHandler');
 
 
 //GET - Return all interest in DB
 exports.getAllInterests = function(req, res) {
 
-  console.log('GET /interests');
+  console.log('GET /interest');
   
   service.getInterest(function(err,response) {
     if(err) {
-      return res.status(500).json({ success: false, data: err});
+      return errorHandler.throwError(res,err);
     }
 
     return res.json(response);
@@ -17,11 +18,12 @@ exports.getAllInterests = function(req, res) {
 
 //POST - Insert a new Interest in db
 exports.saveInterest = function(req, res) {
-  console.log('POST /users');
+
+console.log('POST /interest');
 
   service.saveInterest(req, function(err,response) {
     if(err) {
-      return res.status(500).json({ success: false, data: err});
+      return errorHandler.throwError(res,err);
     }
 
     return res.json(response);
