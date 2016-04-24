@@ -10,7 +10,7 @@ exports.throwError = function(res, error) {
 	} else {
 		return res.status(500).json({
 			success: false,
-			data: err
+			data: error
 		});
 	}
 };

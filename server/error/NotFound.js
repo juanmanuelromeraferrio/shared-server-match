@@ -1,7 +1,7 @@
 var sys = require('util'),
 
 NotFound = function(message) {
-	this.status = 500;
+	this.status = 404;
 	this.message = message;
 };
 

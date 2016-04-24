@@ -56,6 +56,16 @@ describe('JsonValidator', function() {
 		expect(jsonValidator.isInterestValid(jsonInterest)).to.equal(false);
 	});
 
+	it('isInterestValid() without value - Json FAIL should return false', function() {
+		var jsonInterest = {
+			interest: {
+				category: "music / band",
+				valor: "Los Piojos"
+			}
+		};
+		expect(jsonValidator.isInterestValid(jsonInterest)).to.equal(false);
+	});
+
 	it('isInterestValid() with other properties - Json FAIL should return false', function() {
 		var jsonInterest = {
 			interest: {
@@ -142,6 +152,86 @@ describe('JsonValidator', function() {
 					otros: "LP"
 				}],
 				location: {
+					latitude: "212",
+					longitude: "212"
+				}
+			}
+		};
+		expect(jsonValidator.isUserValid(jsonUser)).to.equal(false);
+	});
+
+	it('isUserValid() without alias - Json FAIL should return true', function() {
+		var jsonUser = {
+			user: {
+				name: "Juan",
+				aliasas: "kumaaa",
+				email: "kumaaa",
+				interests: [{
+					category: "music / band",
+					value: "Los Piojos",
+					otros: "LP"
+				}],
+				location: {
+					latitude: "212",
+					longitude: "212"
+				}
+			}
+		};
+		expect(jsonValidator.isUserValid(jsonUser)).to.equal(false);
+	});
+
+	it('isUserValid() without email - Json FAIL should return true', function() {
+		var jsonUser = {
+			user: {
+				name: "Juan",
+				alias: "kumaaa",
+				emaila: "kumaaa",
+				interests: [{
+					category: "music / band",
+					value: "Los Piojos",
+					otros: "LP"
+				}],
+				location: {
+					latitude: "212",
+					longitude: "212"
+				}
+			}
+		};
+		expect(jsonValidator.isUserValid(jsonUser)).to.equal(false);
+	});
+
+	it('isUserValid() without interests - Json FAIL should return true', function() {
+		var jsonUser = {
+			user: {
+				name: "Juan",
+				alias: "kumaaa",
+				email: "kumaaa",
+				intereses: [{
+					category: "music / band",
+					value: "Los Piojos",
+					otros: "LP"
+				}],
+				location: {
+					latitude: "212",
+					longitude: "212"
+				}
+			}
+		};
+		expect(jsonValidator.isUserValid(jsonUser)).to.equal(false);
+	});
+
+	it('isUserValid() without location - Json FAIL should return true', function() {
+		var jsonUser = {
+			user: {
+				name: "Juan",
+				alias: "kumaaa",
+				email: "kumaaa",
+				interests: [{
+					category: "music / band",
+					value: "Los Piojos",
+					otros: "LP"
+				}],
+				locations: {
 					latitude: "212",
 					longitude: "212"
 				}

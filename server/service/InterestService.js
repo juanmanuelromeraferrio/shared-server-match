@@ -44,7 +44,7 @@ exports.saveInterest = function(req, callback) {
     if (err) {
       callback(err);
     } else if (exists) {
-      callback(new BadRequest("Interest " + JSON.stringify(response)) + " already exists.");
+      callback(new BadRequest("Interest " + JSON.stringify(response) + " already exists."));
     } else {
       dao.saveInterest(interest, function(err, response) {
         if (err) {
