@@ -1,49 +1,64 @@
 var express = require("express");
+var cors = require("cors");
 var path = require("path");
 var bodyParser = require("body-parser");
-var methodOverride  = require("method-override");
+var methodOverride = require("method-override");
 var app = express();
 
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use(methodOverride());
-
+app.use(cors());
 
 // Import Controllers
 var usersCtrl = require('./server/controllers/UserController');
 var interestCtrl = require('./server/controllers/InterestController');
 
-//Example Route
-var router = express.Router();
-router.get('/', function(req, res) {
-  res.send("Shared Server Match Api Restful");
+app.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
 });
-app.use(router);
 
-// API routes
-var api = express.Router();
+app.get('/', function(req, res, next) {
+	res.send("Shared Server Match Api Restful");
+});
 
-api.route('/users')
-.get(usersCtrl.getAllUsers)
-.post(usersCtrl.saveUser);
+app.get('/users', function(req, res, next) {
+	usersCtrl.getAllUsers(req, res);
+});
 
-api.route('/users/:id')
-.get(usersCtrl.getUser)
-.put(usersCtrl.updateUser)
-.delete(usersCtrl.deleteUser);
+app.post('/users', function(req, res, next) {
+	usersCtrl.saveUser(req, res);
+});
 
-api.route('/interests')
-.get(interestCtrl.getAllInterests)
-.post(interestCtrl.saveInterest);
+app.get('/users/:id', function(req, res, next) {
+	usersCtrl.getUser(req, res);
+});
 
-api.route('/users/:id/photo')
-.put(usersCtrl.updatePhoto);
+app.put('/users/:id', function(req, res, next) {
+	usersCtrl.updateUser(req, res);
+});
 
-app.use('/', api);
+app.delete('/users/:id', function(req, res, next) {
+	usersCtrl.deleteUser(req, res);
+});
+
+app.put('/users/:id/photo', function(req, res, next) {
+	usersCtrl.updatePhoto(req, res);
+});
+
+app.get('/interests', function(req, res, next) {
+	interestCtrl.getAllInterests(req, res);
+});
+
+app.post('/interests', function(req, res, next) {
+	interestCtrl.saveInterest(req, res);
+});
+
 
 // Start server
 app.listen(app.get('port'), function() {
-  console.log('Node app is running on port', app.get('port'));
+	console.log('Node app is running on port', app.get('port'));
 });
-
