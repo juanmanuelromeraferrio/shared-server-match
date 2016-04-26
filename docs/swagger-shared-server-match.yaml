@@ -1,0 +1,252 @@
+# this is an example of the Uber API
+# as a demonstration of an API spec in YAML
+swagger: '2.0'
+info:
+  title: Shared Server Match API
+  description: Admin users and interests in Match Applicaction.
+  version: "0.0.1"
+# the domain of the service
+host: shared-server-match.herokuapp.com
+# array of all schemes that your API supports
+schemes:
+  - https
+produces:
+  - application/json
+paths:
+  /users:
+    get:
+      description: |
+        Gets `Users` objects.
+      tags:
+        - User
+      responses:
+        200:
+          description: An array of users
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+    post:
+      description: |
+          Creates a new `User`
+      tags:
+        - User
+      produces:
+        - application/json
+      parameters:
+        - name: user
+          in: body
+          description: User to add to the db
+          required: true
+          schema:
+            $ref: '#/definitions/NewUser'
+      responses:
+        '200':
+          description: User response
+          schema:
+            $ref: '#/definitions/User'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Interest Not Found
+          schema:
+            $ref: '#/definitions/Error'
+  /users/{id}:
+    get:
+      description: |
+          Gets `User` object by id.
+      parameters:
+        - name: id
+          in: "path"
+          description: id of user
+          required: true
+          type: string
+      tags:
+        - User
+      responses:
+        200:
+          description: User information
+          schema:
+            $ref: '#/definitions/User'
+        404:
+          description: User not found
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      description: |
+          Delete `User` object by id.
+      parameters:
+        - name: id
+          in: "path"
+          description: id of user
+          required: true
+          type: string
+      tags:
+        - User
+      responses:
+        200:
+          description: Delete OK
+        404:
+          description: User not found
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      description: |
+          Update `User` object by id.
+      parameters:
+        - name: id
+          in: "path"
+          description: id of user
+          required: true
+          type: string
+        - name: user
+          in: body
+          description: User to update
+          required: true
+          schema:
+            $ref: '#/definitions/NewUser'
+      tags:
+        - User
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User response
+          schema:
+            $ref: '#/definitions/User'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Interest or User not found
+          schema:
+            $ref: '#/definitions/Error'
+  /interests:
+    get:
+      tags:
+        - Interest
+      description:  |
+        Gets `Interest` objects.
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: An array of interests
+          schema:
+            $ref: "#/definitions/Interest"
+    post:
+      tags:
+        - Interest
+      description:  |
+        Create a new `Interest` object.
+      produces:
+        - application/json
+      parameters:
+        - name: interest
+          in: body
+          description: Interest to add to the db
+          required: true
+          schema:
+            $ref: '#/definitions/Interest'
+      responses:
+        "200":
+          description: Insert OK
+        '400':
+          description: Bad Request. Intrest already exists.
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  User:
+    type: object
+    properties:
+      user:
+        type: object
+        properties:
+          id:
+            type: string
+            description: Unique identifier representing a specific user.
+          name:
+            type: string
+            description: Name of user.
+          alias:
+            type: string
+            description: Alias of user.
+          email:
+            type: string
+            description: Email of user.
+          photo:
+            type: string
+            description: Profile picture in base64 format.
+          interests:
+            type: array
+            items:
+              $ref: '#/definitions/Interest'
+          location:
+            type: object
+            description: Location of user.
+            properties:
+              latitude:
+                type: string
+              longitude:
+                type: string
+  NewUser:
+    type: object
+    properties:
+      user:
+        type: object
+        properties:
+          name:
+            type: string
+            description: Name of user.
+          alias:
+            type: string
+            description: Alias of user.
+          email:
+            type: string
+            description: Email of user.
+          photo:
+            type: string
+            description: Profile picture in base64 format.
+          interests:
+            type: array
+            items:
+              $ref: '#/definitions/AddInterest'
+          location:
+            type: object
+            description: Location of user.
+            properties:
+              latitude:
+                type: string
+              longitude:
+                type: string
+  Interest:
+    type: object
+    properties:
+      interest:
+        type: object
+        properties:
+          category:
+            type: string
+            description: Category of interest
+          value:
+            type: string
+            description: Value of interest
+  AddInterest:
+    type: object
+    properties:
+        category:
+          type: string
+          description: Category of interest
+        value:
+          type: string
+          description: Value of interest
+  Error:
+    type: object
+    properties:
+      success:
+        type: boolean
+      data:
+        type: string
