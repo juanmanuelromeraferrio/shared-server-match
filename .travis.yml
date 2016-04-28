@@ -1,9 +1,6 @@
 language: node_js
 node_js:
   - 0.12
-
-  script:
+script:
   - npm run coverage
 
-after_script:
-  - if [[ `node --version` == *v0.12* ]]; then cat ./build/coverage/lcov.info; fi
