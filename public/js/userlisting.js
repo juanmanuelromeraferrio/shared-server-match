@@ -36,21 +36,21 @@ $(document).ready(function(){
     });
 
     $("#btn-view").click(function(e) {
-        if (userID == '') {
+        if (usrID == '') {
             return;
         };
         window.location.href = "/user.html?user_id=" + usrID;
 	});
 
     $("#btn-upload").click(function(e) {
-        if (userID == '') {
+        if (usrID == '') {
             return;
         };
         window.location.href = "/pphoto.html?user_id=" + usrID;
 	});
 
     $("#btn-delete").click(function(e) {
-        if (userID == '') {
+        if (usrID == '') {
             return;
         };
         var formMethod = "DELETE";
