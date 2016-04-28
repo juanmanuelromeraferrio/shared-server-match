@@ -3,6 +3,7 @@ var utils = require('../utils/Utils');
 var BadRequest = require("../error/BadRequest");
 var NotFound = require("../error/NotFound");
 var jsonValidator = require('../utils/JsonValidator');
+var utils = require('../utils/Utils');
 var interestService = require('../service/InterestService');
 
 exports.getUsers = function(callback) {
@@ -20,6 +21,14 @@ exports.getUsers = function(callback) {
 
 
 exports.getUser = function(userID, callback) {
+
+  var isUserValid = utils.isNormalInteger(userID);
+
+  if (!isUserValid) {
+    callback(new BadRequest("Invalid user ID"));
+    return;
+  }
+
   dao.getUser(userID, false, function(err, response) {
     if (err) {
       callback(err);
@@ -65,6 +74,14 @@ exports.saveUser = function(req, callback) {
 exports.updateUser = function(req, callback) {
 
   var id = req.params.id;
+
+  var isUserValid = utils.isNormalInteger(id);
+
+  if (!isUserValid) {
+    callback(new BadRequest("Invalid user ID"));
+    return;
+  }
+
   var isValid = jsonValidator.isUserValid(req.body);
 
   if (!isValid) {
@@ -94,6 +111,14 @@ exports.updateUser = function(req, callback) {
 };
 
 exports.deleteUser = function(userID, callback) {
+
+  var isUserValid = utils.isNormalInteger(userID);
+
+  if (!isUserValid) {
+    callback(new BadRequest("Invalid user ID"));
+    return;
+  }
+
   dao.deleteUser(userID, function(err, response) {
     if (err) {
       callback(err);
@@ -107,6 +132,14 @@ exports.deleteUser = function(userID, callback) {
 
 exports.updatePhoto = function(req, callback) {
 
+  var userID = req.params.id;
+  var isUserValid = utils.isNormalInteger(userID);
+
+  if (!isUserValid) {
+    callback(new BadRequest("Invalid user ID"));
+    return;
+  }
+
   var isValid = jsonValidator.isPhotoValid(req.body);
   console.log("udpdatePhotoValid " + isValid);
 
@@ -115,7 +148,6 @@ exports.updatePhoto = function(req, callback) {
     return;
   }
 
-  var userID = req.params.id;
   var photo = req.body.photo;
 
   dao.getUser(userID, true, function(err, response) {
