@@ -1,9 +1,11 @@
+var config = require('../../package.json');
+
 /**
  * Retrieves Metadata
  */
 exports.getMetadata = function(size) {
 	var data = {
-		version: "0.1",
+		version: config.version,
 		count: size
 	};
 
