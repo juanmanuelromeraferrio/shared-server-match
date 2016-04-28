@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha tests --recursive",
-    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec ./tests/utils/JsonValidatorTest.js ./tests/utils/UtilsTest.js",
+    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec ./tests/utils/*.js  ./tests/controllers/*.js ./tests/dao/*.js ./tests/service/*.js",
     "start": "node server.js"
   },
   "dependencies": {
@@ -17,6 +17,7 @@
     "jsonschema": "1.1.0",
     "mocha": "2.4.5",
     "cors": "2.7.1",
+    "istanbul": "0.4.3",
     "method-override": "^2.1.2"
   },
   "engines": {
