@@ -11,6 +11,9 @@ app.use(bodyParser.json());
 app.use(methodOverride());
 app.use(cors());
 
+app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
+app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
+
 // Import Controllers
 var usersCtrl = require('./server/controllers/UserController');
 var interestCtrl = require('./server/controllers/InterestController');
