@@ -1,7 +1,7 @@
 $(document).ready(function(){
     
     var table = $('#table-user').DataTable({});
-    var usrID;
+    var usrID = '';
 
     $('#table-user tbody').on( 'click', 'tr', function () {
         if ( $(this).hasClass('danger') ) {
@@ -36,14 +36,23 @@ $(document).ready(function(){
     });
 
     $("#btn-view").click(function(e) {
+        if (userID == '') {
+            return;
+        };
         window.location.href = "/user.html?user_id=" + usrID;
 	});
 
     $("#btn-upload").click(function(e) {
+        if (userID == '') {
+            return;
+        };
         window.location.href = "/pphoto.html?user_id=" + usrID;
 	});
 
     $("#btn-delete").click(function(e) {
+        if (userID == '') {
+            return;
+        };
         var formMethod = "DELETE";
         var formURL = "/users/" + usrID;
         
