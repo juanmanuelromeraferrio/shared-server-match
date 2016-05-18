@@ -68,7 +68,7 @@ exports.existsInterests = function(interests, callback) {
   var j = 0;
   var self = this;
 
-  if(interest.length == 0)
+  if(interests.length == 0)
   {
     callback(null, true, null);
     return;
