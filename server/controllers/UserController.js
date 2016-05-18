@@ -30,7 +30,7 @@ exports.getUser = function(req, res) {
 
 //POST - Insert a new User in db
 exports.saveUser = function(req, res) {
-  console.log('POST /users');
+  console.log('POST /users ' + req.body);
   userService.saveUser(req, function(err,response) {
     if(err) {
       return errorHandler.throwError(res,err);
