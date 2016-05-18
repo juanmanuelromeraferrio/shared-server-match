@@ -67,6 +67,13 @@ exports.existsInterests = function(interests, callback) {
   var error = null;
   var j = 0;
   var self = this;
+
+  if(interest.length == 0)
+  {
+    callback(null, true, null);
+    return;
+  }
+
   for (i = 0; i < interests.length; i++) {
     var interest = interests[i];
     self.existsInterest(interest, function(err, exists, response) {
