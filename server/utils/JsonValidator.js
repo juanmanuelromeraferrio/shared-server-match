@@ -72,6 +72,9 @@ var userSchema = {
       "email": {
         "type": "string"
       },
+      "sex": {
+        "type": "string"
+      },
       "photo": {
         "type": "string"
       },
@@ -87,7 +90,7 @@ var userSchema = {
       "location": {
         "$ref": "/SimpleLocation"
       },
-      "maxProperties": 6,
+      "maxProperties": 7,
       "required": ["name", "alias", "email", "interests", "location"]
     }
   },
