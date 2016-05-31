@@ -75,6 +75,9 @@ var userSchema = {
       "sex": {
         "type": "string"
       },
+      "age": {
+        "type": "string"
+      },
       "photo": {
         "type": "string"
       },
@@ -90,8 +93,8 @@ var userSchema = {
       "location": {
         "$ref": "/SimpleLocation"
       },
-      "maxProperties": 7,
-      "required": ["name", "alias", "email", "interests", "location"]
+      "maxProperties": 8,
+      "required": ["name", "alias", "email", "interests", "location", "sex", "age"]
     }
   },
   "additionalProperties": false,

@@ -83,6 +83,8 @@ describe('JsonValidator', function() {
 				name: "Juan",
 				alias: "kumaaa",
 				email: "kumaaa",
+				sex: "Masculino",
+				age: "28",
 				photo: "kumaaa",
 				interests: [{
 					category: "music / band",
@@ -104,6 +106,9 @@ describe('JsonValidator', function() {
 				name: "Juan",
 				alias: "kumaaa",
 				email: "kumaaa",
+				email: "kumaaa",
+				sex: "Masculino",
+				age: "28",
 				interests: [{
 					category: "music / band",
 					value: "Los Piojos",
