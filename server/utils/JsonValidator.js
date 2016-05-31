@@ -94,7 +94,7 @@ var userSchema = {
         "$ref": "/SimpleLocation"
       },
       "maxProperties": 8,
-      "required": ["name", "alias", "email", "interests", "location", "sex", "age"]
+      "required": ["name", "alias", "email", "interests", "location"] //"sex", "age"
     }
   },
   "additionalProperties": false,
