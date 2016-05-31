@@ -41,7 +41,7 @@ exports.saveUser = function(req, res) {
 
 //PUT - Update an user in db
 exports.updateUser = function(req, res) {
-  console.log('PUT /users/' + req.params.id);
+  console.log('PUT /users ' + JSON.stringify(req.body));
 
   userService.updateUser(req, function(err,response) {
     if(err) {
