@@ -72,3 +72,14 @@ exports.updatePhoto = function(req, res) {
     return res.sendStatus(200);
   });
 };
+
+//DELETE - deleteAll
+exports.deleteAllUsers = function(req, res) {
+  console.log('DELETE /users');
+  userService.deleteAllUsers(function(err, response) {
+    if (err) {
+      return errorHandler.throwError(res, err);
+    }
+    return res.sendStatus(200);
+  });
+};

@@ -57,6 +57,20 @@ exports.saveInterest = function(req, callback) {
   });
 };
 
+/*
+ * Delete all interests
+ * @param {Function} callback  The function to call when retrieval is complete.
+ */
+exports.deleteAllInterest = function(callback) {
+  dao.deleteAllInterest(function(err, response) {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null);
+    }
+  });
+};
+
 /**
  * Exists Interest 
  * @param {Interest} interests  The Interests to see if exists.
@@ -68,8 +82,7 @@ exports.existsInterests = function(interests, callback) {
   var j = 0;
   var self = this;
 
-  if(interests.length == 0)
-  {
+  if (interests.length == 0) {
     callback(null, true, null);
     return;
   }

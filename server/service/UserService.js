@@ -172,3 +172,17 @@ exports.updatePhoto = function(req, callback) {
     }
   });
 };
+
+/*
+ * Delete all users
+ * @param {Function} callback  The function to call when retrieval is complete.
+ */
+exports.deleteAllUsers = function(callback) {
+  dao.deleteAllUsers(function(err, response) {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null);
+    }
+  });
+};

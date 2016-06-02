@@ -203,3 +203,31 @@ var dbConnection = require(path.join(__dirname, '../', '../', 'config'));
      });
       });
   };
+
+  /**
+ * Delete all elements of user
+ * @param {Function} callback  The function to call when retrieval is complete.
+ */
+exports.deleteAllUsers= function(callback) {
+  // Get a Postgres client from the connection pool
+  pg.connect(dbConnection, function(err, client, done) {
+    // Handle connection errors
+    if (err) {
+      done();
+      console.log(err);
+      callback(err);
+      return;
+    }
+
+    client.query("DELETE FROM users", function(err, result) {
+      done();
+      if (err) {
+        console.log(err);
+        callback(err);
+      } else {
+
+        callback(null);
+      }
+    });
+  });
+};

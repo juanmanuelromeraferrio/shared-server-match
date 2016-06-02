@@ -7,8 +7,13 @@ var app = express();
 
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(bodyParser.json({
+	limit: '50mb'
+}));
+app.use(bodyParser.urlencoded({
+	limit: '50mb',
+	extended: true
+}));
 app.use(methodOverride());
 app.use(cors());
 
@@ -49,6 +54,10 @@ app.delete('/users/:id', function(req, res, next) {
 	usersCtrl.deleteUser(req, res);
 });
 
+app.delete('/users', function(req, res, next) {
+	usersCtrl.deleteAllUsers(req, res);
+});
+
 app.put('/users/:id/photo', function(req, res, next) {
 	usersCtrl.updatePhoto(req, res);
 });
@@ -60,6 +69,11 @@ app.get('/interests', function(req, res, next) {
 app.post('/interests', function(req, res, next) {
 	interestCtrl.saveInterest(req, res);
 });
+
+app.delete('/interests', function(req, res, next) {
+	interestCtrl.deleteAllInterest(req, res);
+});
+
 
 
 // Start server
