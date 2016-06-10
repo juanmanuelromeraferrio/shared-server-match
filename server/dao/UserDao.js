@@ -27,6 +27,7 @@ var dbConnection = require(path.join(__dirname, '../', '../', 'config'));
             'user': "" 
           }
           var response = row.data;
+          response.photo = "/user/" + row.id + "/photo"
           response.id = row.id;
           user.user = response;
           results.push(user);
