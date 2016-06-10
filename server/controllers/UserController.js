@@ -4,11 +4,11 @@ var errorHandler = require('../utils/ErrorHandler');
 //GET - Return all users in DB
 exports.getAllUsers = function(req, res) {
 
-	console.log('GET /users');
+  console.log('GET /users');
 
-  userService.getUsers(function(err,response) {
-    if(err) {
-      return errorHandler.throwError(res,err);
+  userService.getUsers(function(err, response) {
+    if (err) {
+      return errorHandler.throwError(res, err);
     }
     return res.json(response);
   });
@@ -20,9 +20,22 @@ exports.getUser = function(req, res) {
 
   console.log('GET /users/' + req.params.id);
 
-  userService.getUser(req.params.id, function(err,response) {
-    if(err) {
-      return errorHandler.throwError(res,err);
+  userService.getUser(req.params.id, function(err, response) {
+    if (err) {
+      return errorHandler.throwError(res, err);
+    }
+    return res.json(response);
+  });
+};
+
+//GET Photo by UserID
+exports.getPhoto = function(req, res) {
+
+  console.log('GET /users/' + req.params.id + '/photo');
+
+  userService.getPhoto(req.params.id, function(err, response) {
+    if (err) {
+      return errorHandler.throwError(res, err);
     }
     return res.json(response);
   });
@@ -31,9 +44,9 @@ exports.getUser = function(req, res) {
 //POST - Insert a new User in db
 exports.saveUser = function(req, res) {
   console.log('POST /users ' + JSON.stringify(req.body));
-  userService.saveUser(req, function(err,response) {
-    if(err) {
-      return errorHandler.throwError(res,err);
+  userService.saveUser(req, function(err, response) {
+    if (err) {
+      return errorHandler.throwError(res, err);
     }
     return res.json(response);
   });
@@ -43,9 +56,9 @@ exports.saveUser = function(req, res) {
 exports.updateUser = function(req, res) {
   console.log('PUT /users ' + JSON.stringify(req.body));
 
-  userService.updateUser(req, function(err,response) {
-    if(err) {
-      return errorHandler.throwError(res,err);
+  userService.updateUser(req, function(err, response) {
+    if (err) {
+      return errorHandler.throwError(res, err);
     }
     return res.sendStatus(200);
   });
@@ -54,9 +67,9 @@ exports.updateUser = function(req, res) {
 //DELETE - DELETE an user in db
 exports.deleteUser = function(req, res) {
   console.log('DELETE /users/' + req.params.id);
-  userService.deleteUser(req.params.id, function(err,response) {
-    if(err) {
-      return errorHandler.throwError(res,err);
+  userService.deleteUser(req.params.id, function(err, response) {
+    if (err) {
+      return errorHandler.throwError(res, err);
     }
     return res.sendStatus(200);
   });
@@ -64,10 +77,10 @@ exports.deleteUser = function(req, res) {
 
 //PUT - Update Photo
 exports.updatePhoto = function(req, res) {
-  console.log('PUT /users/'+ req.params.id + '/photo');
-  userService.updatePhoto(req, function(err,response) {
-    if(err) {
-      return errorHandler.throwError(res,err);
+  console.log('PUT /users/' + req.params.id + '/photo');
+  userService.updatePhoto(req, function(err, response) {
+    if (err) {
+      return errorHandler.throwError(res, err);
     }
     return res.sendStatus(200);
   });

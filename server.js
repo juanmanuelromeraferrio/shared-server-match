@@ -46,6 +46,9 @@ app.get('/users/:id', function(req, res, next) {
 	usersCtrl.getUser(req, res);
 });
 
+app.get('/users/:id/photo', function(req, res, next) {
+	usersCtrl.getPhoto(req, res);
+});
 app.put('/users/:id', function(req, res, next) {
 	usersCtrl.updateUser(req, res);
 });

@@ -41,6 +41,32 @@ exports.getUser = function(userID, callback) {
   });
 };
 
+exports.getPhoto = function(userID, callback) {
+
+  var isUserValid = utils.isNormalInteger(userID);
+
+  if (!isUserValid) {
+    callback(new BadRequest("Invalid user ID"));
+    return;
+  }
+
+  dao.getUser(userID, false, function(err, response) {
+    if (err) {
+      callback(err);
+    } else if (response) {
+      var photoResponse = {
+        "photo": "",
+      }
+      if (response.user.photo) {
+        photoResponse.photo = response.user.photo;
+      }
+      callback(null, photoResponse);
+    } else {
+      callback(new NotFound("Usuario Inexistente"));
+    }
+  });
+};
+
 exports.saveUser = function(req, callback) {
 
   var isValid = jsonValidator.isUserValid(req.body);
