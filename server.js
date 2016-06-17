@@ -1,3 +1,4 @@
+var compression = require('compression');
 var express = require("express");
 var cors = require("cors");
 var path = require("path");
@@ -19,6 +20,7 @@ app.use(cors());
 
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
+app.use(compression());
 
 // Import Controllers
 var usersCtrl = require('./server/controllers/UserController');
